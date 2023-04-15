@@ -10,15 +10,15 @@ import copy
 
 ##########################################################
 
-label_to_ix=np.load('label_to_ix.npy').item()
-ix_to_label=np.load('ix_to_label.npy')
-training_data=np.load('training_data.npy')
-test_data=np.load('test_data.npy')
-val_data=np.load('val_data.npy')
-word_to_ix=np.load('word_to_ix.npy').item()
-ix_to_word=np.load('ix_to_word.npy')
-newwikivec=np.load('newwikivec.npy')
-wikivoc=np.load('wikivoc.npy').item()
+label_to_ix=np.load('label_to_ix.npy', allow_pickle=True).item()
+ix_to_label=np.load('ix_to_label.npy', allow_pickle=True)
+training_data=np.load('training_data.npy', allow_pickle=True)
+test_data=np.load('test_data.npy', allow_pickle=True)
+val_data=np.load('val_data.npy', allow_pickle=True)
+word_to_ix=np.load('word_to_ix.npy', allow_pickle=True).item()
+ix_to_word=np.load('ix_to_word.npy', allow_pickle=True)
+newwikivec=np.load('newwikivec.npy', allow_pickle=True)
+wikivoc=np.load('wikivoc.npy', allow_pickle=True).item()
 
 
 
@@ -294,8 +294,19 @@ def testmodel(modelstate, sim):
     y_true=temptrue.T
     y_scores=tempscores.T
     y_pred=(y_scores>0.5).astype(np.int)
-    print ('test loss', np.mean(lossestest))
-    print ('top-',topk, np.mean(recall))
+
+    
+
+    try:
+        lossestest_cpu_numpy = lossestest.cpu().numpy()
+
+        print ('test loss', np.mean(lossestest))
+    except:
+        print('cant print test loss')
+    try:
+        print ('top-',topk, np.mean(recall))
+    except:
+        print('cant print topk')
     print ('macro AUC', roc_auc_score(y_true, y_scores,average='macro'))
     print ('micro AUC', roc_auc_score(y_true, y_scores,average='micro'))
     print ('macro F1', f1_score(y_true, y_pred, average='macro')  )
