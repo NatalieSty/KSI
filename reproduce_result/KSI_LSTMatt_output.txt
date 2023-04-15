@@ -1,0 +1,142 @@
+KSI_LSTMatt.py:42: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+  new_data=np.array(new_data)
+KSI_LSTMatt.py:56: DeprecationWarning: `np.int` is a deprecated alias for the builtin `int`. To silence this warning, use `int` by itself. Doing this will not modify any behavior and is safe. When replacing `np.int`, you may wish to use e.g. `np.int64` or `np.int32` to specify the precision. If you wish to review your current use, check the release note link for additional information.
+Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+  main_matrix = np.zeros((mybsize, numword), dtype= np.int)
+start_training
+0
+XXXXXXXXXXXXXXXXXXXXXXXXXXXX
+validation top- 10 0.37988820337654555
+1
+XXXXXXXXXXXXXXXXXXXXXXXXXXXX
+validation top- 10 0.5112384400976752
+2
+XXXXXXXXXXXXXXXXXXXXXXXXXXXX
+validation top- 10 0.6199950601537452
+3
+XXXXXXXXXXXXXXXXXXXXXXXXXXXX
+validation top- 10 0.6507167273785759
+4
+XXXXXXXXXXXXXXXXXXXXXXXXXXXX
+validation top- 10 0.6796993443967775
+5
+XXXXXXXXXXXXXXXXXXXXXXXXXXXX
+validation top- 10 0.7035714538468513
+6
+XXXXXXXXXXXXXXXXXXXXXXXXXXXX
+validation top- 10 0.726051690158769
+7
+XXXXXXXXXXXXXXXXXXXXXXXXXXXX
+validation top- 10 0.7394301656028661
+8
+XXXXXXXXXXXXXXXXXXXXXXXXXXXX
+validation top- 10 0.7504395684267384
+9
+XXXXXXXXXXXXXXXXXXXXXXXXXXXX
+validation top- 10 0.7593746318006105
+10
+XXXXXXXXXXXXXXXXXXXXXXXXXXXX
+validation top- 10 0.769075991419684
+11
+XXXXXXXXXXXXXXXXXXXXXXXXXXXX
+validation top- 10 0.7741209886906361
+12
+XXXXXXXXXXXXXXXXXXXXXXXXXXXX
+validation top- 10 0.7793742500641873
+13
+XXXXXXXXXXXXXXXXXXXXXXXXXXXX
+validation top- 10 0.7838694524581288
+14
+XXXXXXXXXXXXXXXXXXXXXXXXXXXX
+validation top- 10 0.7867679908113224
+15
+XXXXXXXXXXXXXXXXXXXXXXXXXXXX
+validation top- 10 0.7904236840401403
+16
+XXXXXXXXXXXXXXXXXXXXXXXXXXXX
+validation top- 10 0.7920534199863485
+17
+XXXXXXXXXXXXXXXXXXXXXXXXXXXX
+validation top- 10 0.7937577975706349
+18
+XXXXXXXXXXXXXXXXXXXXXXXXXXXX
+validation top- 10 0.7951421145927169
+19
+XXXXXXXXXXXXXXXXXXXXXXXXXXXX
+validation top- 10 0.7945156461930846
+20
+XXXXXXXXXXXXXXXXXXXXXXXXXXXX
+validation top- 10 0.7959870121406362
+21
+XXXXXXXXXXXXXXXXXXXXXXXXXXXX
+validation top- 10 0.7959348785183605
+22
+XXXXXXXXXXXXXXXXXXXXXXXXXXXX
+validation top- 10 0.7956612936215016
+23
+XXXXXXXXXXXXXXXXXXXXXXXXXXXX
+validation top- 10 0.7972913770192369
+24
+XXXXXXXXXXXXXXXXXXXXXXXXXXXX
+validation top- 10 0.7953024048211655
+25
+XXXXXXXXXXXXXXXXXXXXXXXXXXXX
+validation top- 10 0.7936440507058109
+26
+XXXXXXXXXXXXXXXXXXXXXXXXXXXX
+validation top- 10 0.7919196023306091
+27
+XXXXXXXXXXXXXXXXXXXXXXXXXXXX
+validation top- 10 0.7926580974487581
+28
+XXXXXXXXXXXXXXXXXXXXXXXXXXXX
+validation top- 10 0.7921438968847909
+[0.37988820337654555, 0.5112384400976752, 0.6199950601537452, 0.6507167273785759, 0.6796993443967775, 0.7035714538468513, 0.726051690158769, 0.7394301656028661, 0.7504395684267384, 0.7593746318006105, 0.769075991419684, 0.7741209886906361, 0.7793742500641873, 0.7838694524581288, 0.7867679908113224, 0.7904236840401403, 0.7920534199863485, 0.7937577975706349, 0.7951421145927169, 0.7945156461930846, 0.7959870121406362, 0.7959348785183605, 0.7956612936215016, 0.7972913770192369, 0.7953024048211655, 0.7936440507058109, 0.7919196023306091, 0.7926580974487581, 0.7921438968847909] 23
+start_training
+0
+XXXXXXXXXXXXXXXXXXXXXXXXXXXX
+validation top- 10 0.8037690190887603
+1
+XXXXXXXXXXXXXXXXXXXXXXXXXXXX
+validation top- 10 0.8053624010253483
+2
+XXXXXXXXXXXXXXXXXXXXXXXXXXXX
+validation top- 10 0.8077064811886201
+3
+XXXXXXXXXXXXXXXXXXXXXXXXXXXX
+validation top- 10 0.8093504124619466
+4
+XXXXXXXXXXXXXXXXXXXXXXXXXXXX
+validation top- 10 0.808129730198521
+5
+XXXXXXXXXXXXXXXXXXXXXXXXXXXX
+validation top- 10 0.8073762798400445
+6
+XXXXXXXXXXXXXXXXXXXXXXXXXXXX
+validation top- 10 0.8070556213260875
+7
+XXXXXXXXXXXXXXXXXXXXXXXXXXXX
+validation top- 10 0.8064437092531813
+8
+XXXXXXXXXXXXXXXXXXXXXXXXXXXX
+validation top- 10 0.8048229494647576
+[0.8037690190887603, 0.8053624010253483, 0.8077064811886201, 0.8093504124619466, 0.808129730198521, 0.8073762798400445, 0.8070556213260875, 0.8064437092531813, 0.8048229494647576] 3
+LSTMattn alone:           
+KSI_LSTMatt.py:299: DeprecationWarning: `np.int` is a deprecated alias for the builtin `int`. To silence this warning, use `int` by itself. Doing this will not modify any behavior and is safe. When replacing `np.int`, you may wish to use e.g. `np.int64` or `np.int32` to specify the precision. If you wish to review your current use, check the release note link for additional information.
+Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+  y_pred=(y_scores>0.5).astype(np.int)
+top- 10 0.7920265695643111
+macro AUC 0.8441521936968293
+micro AUC 0.9739740755273113
+macro F1 0.25347849542929446
+micro F1 0.6460578513069899
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+KSI+LSTMattn:           
+KSI_LSTMatt.py:299: DeprecationWarning: `np.int` is a deprecated alias for the builtin `int`. To silence this warning, use `int` by itself. Doing this will not modify any behavior and is safe. When replacing `np.int`, you may wish to use e.g. `np.int64` or `np.int32` to specify the precision. If you wish to review your current use, check the release note link for additional information.
+Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+  y_pred=(y_scores>0.5).astype(np.int)
+top- 10 0.8073063882683963
+macro AUC 0.8818175754183619
+micro AUC 0.9776672865799337
+macro F1 0.29883602051068453
+micro F1 0.6645756772925392
