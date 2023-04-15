@@ -7,7 +7,11 @@ torch.manual_seed(1)
 from sklearn.metrics import roc_auc_score
 from sklearn.metrics import f1_score
 import copy
+
 from transformers import AutoModel, AutoTokenizer
+from transformers import AutoModel, AutoConfig
+
+
 
 ##########################################################
 
@@ -85,38 +89,55 @@ batchval_data=preprocessing(val_data)
 ######################################################################
 # Create the model:
 
-Embeddingsize=100
-hidden_dim=200
-class TransformerKSI(nn.Module):
+Embeddingsize = 100
+hidden_dim = 200
+nhead = 4
+num_layers = 2
 
-    def __init__(self, batch_size, vocab_size, tagset_size, transformer_model_name):
-        super(TransformerKSI, self).__init__()
+from transformers import DistilBertTokenizer, DistilBertModel
 
-        self.transformer = AutoModel.from_pretrained(transformer_model_name)
-        self.tokenizer = AutoTokenizer.from_pretrained(transformer_model_name)
-        self.dropout = nn.Dropout(0.2)
-        self.hidden2tag = nn.Linear(self.transformer.config.hidden_size, tagset_size)
-        self.layer2 = nn.Linear(Embeddingsize, 1, bias=False)
-        self.embedding = nn.Linear(rvocsize, Embeddingsize)
-        self.vattention = nn.Linear(Embeddingsize, Embeddingsize)
-        self.sigmoid = nn.Sigmoid()
+class TransformerClassifier(nn.Module):
 
-    def forward(self, vec1, nvec, wiki, simlearning):
-        # Tokenize input
-        input_ids = vec1
-        attention_mask = (input_ids != self.tokenizer.pad_token_id).long()
+    def __init__(self, batch_size, vocab_size, tagset_size):
+        super(TransformerClassifier, self).__init__()
+        self.hidden_dim = hidden_dim
+
+        self.transformer_model = DistilBertModel.from_pretrained('distilbert-base-uncased')
         
-        # Pass input through the transformer
-        output = self.transformer(input_ids, attention_mask=attention_mask)
-        last_hidden_state = output.last_hidden_state
-
-        # Apply dropout
-        last_hidden_state = self.dropout(last_hidden_state)
-
-        # Compute tag scores
-        vec2 = self.hidden2tag(last_hidden_state[:, 0, :])
-        tag_scores = self.sigmoid(vec2)
-
+        self.final = nn.Linear(hidden_dim, tagset_size)
+        
+        self.layer2 = nn.Linear(Embeddingsize, 1,bias=False)
+        self.embedding=nn.Linear(rvocsize,Embeddingsize)
+        self.vattention=nn.Linear(Embeddingsize,Embeddingsize,bias=False)
+        
+        self.sigmoid = nn.Sigmoid()
+        self.embed_drop = nn.Dropout(p=0.2)
+    
+    def forward(self, vec1, nvec, wiki, simlearning):
+        
+        transformer_out = self.transformer_model(vec1).last_hidden_state
+        
+        if simlearning==1:
+            nvec=nvec.view(batchsize,1,-1)
+            nvec=nvec.expand(batchsize,wiki.size()[0],-1)
+            wiki=wiki.view(1,wiki.size()[0],-1)
+            wiki=wiki.expand(nvec.size()[0],wiki.size()[1],-1)
+            new=wiki*nvec
+            new=self.embedding(new)
+            vattention=self.sigmoid(self.vattention(new))
+            new=new*vattention
+            vec3=self.layer2(new)
+            vec3=vec3.view(batchsize,-1)
+        
+        transformer_out = transformer_out.transpose(0, 1)
+        
+        myfinal = self.final(transformer_out)
+        
+        if simlearning == 1:
+            tag_scores = self.sigmoid(myfinal.detach() + vec3)
+        else:
+            tag_scores = self.sigmoid(myfinal)
+        
         return tag_scores
 
 ######################################################################
@@ -191,8 +212,11 @@ def trainmodel(model, sim):
             return modelsaved[bestiter]
     
 # Instantiate the model with the desired transformer model name
+tokenizer = DistilBertTokenizer.from_pretrained('distilbert-base-uncased')
+
+
 transformer_model_name = "distilbert-base-uncased"
-model = TransformerKSI(batchsize, len(word_to_ix), len(label_to_ix), transformer_model_name)
+model = TransformerClassifier(batchsize, len(word_to_ix), len(label_to_ix))
 model.cuda()
 
 loss_function = nn.BCELoss()
@@ -201,7 +225,7 @@ optimizer = optim.Adam(model.parameters())
 basemodel = trainmodel(model, 0)
 torch.save(basemodel, 'Transformer_model')
 
-model = TransformerKSI(batchsize, len(word_to_ix), len(label_to_ix), transformer_model_name)
+model = TransformerClassifier(batchsize, len(word_to_ix), len(label_to_ix))
 model.cuda()
 model.load_state_dict(basemodel)
 loss_function = nn.BCELoss()
