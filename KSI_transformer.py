@@ -235,7 +235,7 @@ torch.save(KSImodel, 'KSI_Transformer_model')
 
 
 def testmodel(modelstate, sim):
-    model = CNN(batchsize, len(word_to_ix), len(label_to_ix))
+    model = TransformerClassifier(batchsize, len(word_to_ix), len(label_to_ix))
     model.cuda()
     model.load_state_dict(modelstate)
     loss_function = nn.BCELoss()
