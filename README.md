@@ -3,7 +3,7 @@ This repository contains codes for Knowledge Source Intergration (KSI) framework
 * **Bai, T., Vucetic, S., Improving Medical Code Prediction from Clinical Text via Incorporating Online Knowledge Sources, The Web Conference (WWW'19), 2019.**
 This projec is to reproduce the results in the paper and explore the methodology in the paper and possibly provide some potential improvements. 
 * [Link to original paper](https://dl.acm.org/doi/10.1145/3308558.3313485)
-* [Link to its github repo] (https://github.com/tiantiantu/KSI)
+* [Link to its github repo](https://github.com/tiantiantu/KSI)
 ### Dependencies ###
 I used the following environment for the implementation:
 * python==3.7.0
