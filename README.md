@@ -18,4 +18,4 @@ Before running the program, you need to apply for [MIMIC-III](https://mimic.phys
 
 Once you get these two files, run preprocessing scripts `python preprocessing1.py`, `python preprocessing2.py`, `python preprocessing3.py` in order.
 
-After running three preprocessing files, you can run any of four models ("python KSI_LSTM.py", "python KSI_LSTMatt.py", "python KSI_CNN.py", "python KSI_CAML.py") to see how much improvement KSI framework brings to the specific model.
+After running three preprocessing files, you can run any of four models (`python KSI_LSTM.py`, `python KSI_LSTMatt.py`, `python KSI_CNN.py`, `python KSI_CAML.py`) to see how much improvement KSI framework brings to the specific model.
